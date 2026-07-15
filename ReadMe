@@ -1,0 +1,129 @@
+# Customer Churn Prediction using Machine Learning
+
+An end-to-end machine learning project that predicts whether a telecom
+customer is likely to churn, based on demographics, service usage, billing
+information, and support interactions. Includes a Streamlit web app for
+interactive, real-time predictions.
+
+## 🎯 Objective
+
+Develop a machine learning system that predicts customer churn to help
+businesses proactively identify at-risk customers and take retention action.
+
+## 📊 Dataset
+
+- **Domain:** Telecom
+- **Records:** 7,043 customers
+- **Original features:** 22
+- **Target:** `Churn` (0 = No Churn, 1 = Churn)
+
+**Features used:**
+`gender`, `SeniorCitizen`, `Partner`, `Dependents`, `tenure`,
+`PhoneService`, `MultipleLines`, `InternetService`, `OnlineSecurity`,
+`OnlineBackup`, `DeviceProtection`, `TechSupport`, `StreamingTV`,
+`StreamingMovies`, `Contract`, `PaperlessBilling`, `PaymentMethod`,
+`MonthlyCharges`, `TotalCharges`, `numAdminTickets`, `numTechTickets`
+
+## 🧱 Project Structure
+
+```
+customer-churn-prediction/
+├── app.py                     # Streamlit application
+├── requirements.txt
+├── .gitignore
+├── README.md
+├── models/
+│   ├── best_model.pkl
+│   ├── scaler.pkl
+│   └── label_encoders.pkl
+├── src/
+│   ├── data_preprocessing.py
+│   ├── feature_engineering.py
+│   ├── train_model.py
+│   ├── evaluate_model.py
+│   └── predict.py
+└── outputs/
+    └── figures/
+```
+
+## ⚙️ Machine Learning Pipeline
+
+### 1. Data Preprocessing
+- Loaded the Excel dataset
+- Removed duplicate records
+- Handled missing values
+- Converted data types
+- Applied Label Encoding to categorical variables
+- Applied Standard Scaling to numerical features
+- Saved `label_encoders.pkl` and `scaler.pkl`
+
+### 2. Feature Engineering
+Created business-driven features:
+- `AvgMonthlySpend`
+- `TotalSupportTickets`
+- `CustomerLifetimeValue`
+- `LongTermCustomer`
+- `HighMonthlyCharges`
+- `HighSupportCustomer`
+- `TenureGroup`
+
+### 3. Model Training
+Trained and compared:
+- Logistic Regression
+- Random Forest Classifier
+- XGBoost Classifier
+
+**Evaluation metrics:** Accuracy, Precision, Recall, F1 Score, ROC-AUC
+
+The best-performing model is saved to `models/best_model.pkl`.
+
+## 🚀 Running the App
+
+1. Clone the repository:
+   ```bash
+   git clone <your-repo-url>
+   cd customer-churn-prediction
+   ```
+
+2. (Recommended) Create and activate a virtual environment:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate      # macOS/Linux
+   venv\Scripts\activate         # Windows
+   ```
+
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Ensure the trained artifacts exist in `models/`:
+   - `best_model.pkl`
+   - `scaler.pkl`
+   - `label_encoders.pkl`
+
+5. Launch the app:
+   ```bash
+   streamlit run app.py
+   ```
+
+## 🖥️ App Features
+
+- Interactive customer input form (demographics, services, billing, support)
+- Automatic feature engineering to match the training pipeline
+- Label encoding and scaling applied consistently with training
+- Churn / No Churn prediction with probability score
+- Simple, actionable business recommendation based on the result
+
+## 🛠️ Tech Stack
+
+Python · pandas · NumPy · scikit-learn · XGBoost · Streamlit · joblib ·
+matplotlib · seaborn
+
+## 📌 Notes
+
+- `app.py` expects the trained artifacts (`best_model.pkl`, `scaler.pkl`,
+  `label_encoders.pkl`) to already exist in the `models/` directory — run
+  the training pipeline in `src/` first if they are not present.
+- Feature engineering logic in `app.py` mirrors `src/feature_engineering.py`
+  to ensure inference-time consistency with training.
